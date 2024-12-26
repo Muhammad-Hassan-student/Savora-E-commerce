@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import Title from './Title';
 import ProductItem from './ProductItem';
-import { products } from '../assets/frontend assets/assets';
 
 const BestSeller = () => {
     const {products} = useContext(ShopContext);
@@ -11,7 +10,7 @@ const BestSeller = () => {
 
     useEffect(() => {
         try {
-            const bestSellerProduct =  (products || products).filter((item) => (item.bestSeller ))
+            const bestSellerProduct =   products.filter((item) => (item.bestSeller ))
             // console.log(bestSellerProduct.slice(0,5))
           setBestSeller(bestSellerProduct.slice(0,5));
         } catch (error) {
@@ -22,6 +21,7 @@ const BestSeller = () => {
       
     } ,[products])
     // console.log(bestSeller);
+
     
 
     return (
