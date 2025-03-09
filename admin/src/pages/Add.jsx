@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { assets } from '../assets/assets'
 import axios from 'axios'
 import { backendUrl } from '../App'
@@ -18,7 +18,26 @@ const Add = ({token}) => {
   const [subCategory,setSubCategory] = useState('')
   const [bestseller,setBestSeller] = useState('')
   const [sizes,setSizes] = useState('')
+  const [categories,setCategories] = useState([])
   // console.log(subCategory);
+
+  const getAllCategories = async () => {
+    try {
+      const res = await axios.get(backendUrl + '/api/category/all-categories',{headers: {token}});
+
+        setCategories(res.data);
+     
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  useEffect(() => {
+    getAllCategories()
+  },[token]
+ )
+
+ console.log(category);
   
   const onSubmitHandler = async (e) => {
     try {
@@ -100,9 +119,10 @@ const Add = ({token}) => {
             <p className='mb-2'>Category</p>
             <select onChange={(e)=>setCategory(e.target.value)} defaultValue={'All'} className='w-full px-3 py-2'>
               <option value="All">All</option>
-              <option value="Men">Men</option>
-              <option value="Women">Women</option>
-              <option value="Kids">Kids</option>
+          {categories.map((c) => (
+              <option  key={c._id} value={c.name}>{c.name}</option>
+              
+            ))}
             </select>
           </div>
 
